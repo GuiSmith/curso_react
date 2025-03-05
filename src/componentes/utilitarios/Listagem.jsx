@@ -10,6 +10,10 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [] }) =
 
     const [objetos, setObjetos] = useState([]);
 
+    const [offset,setOffset] = useState(0);
+
+    const limit = 10;
+
     useEffect(() => {
         const fields = colunas.length > 0 ? `fields=${colunas.join(',')}` : '';
         const url = `${api_url}/${endpoint}?${fields}`;
