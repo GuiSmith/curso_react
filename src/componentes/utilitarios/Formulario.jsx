@@ -9,17 +9,17 @@ import Botoes from './Botoes';
 const Formulario = ({ campos, botoes = [], valores, setValores }) => {
 
     const formatarCampo = (tipo, valor) => {
-        if(!valor) return valor;
-        
-        switch(tipo){
+        if (!valor) return valor;
+
+        switch (tipo) {
             case 'checkbox':
                 return valor ? 'checked' : '';
                 break;
             case 'date':
-                return format(valor, "yyyy-MM-dd", {locale: ptBR});
+                return format(valor, "yyyy-MM-dd", { locale: ptBR });
                 break;
             case 'datetime-local':
-                return format(valor, "yyyy-MM-dd'T'HH:mm:ss", {locale: ptBR});
+                return format(valor, "yyyy-MM-dd'T'HH:mm:ss", { locale: ptBR });
                 break;
             case 'time':
                 return format(valor, "HH:mm:ss");
@@ -33,27 +33,31 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
         // console.log(`Input Change - Name: ${name}, Type: ${type}, Value: ${value}`);
-        setValores((prev) => {
-            const newValue = { ...prev };
-            switch (type) {
-                case 'checkbox':
-                    newValue[name] = checked;
-                    break;
-                case 'date':
-                    newValue[name] = format(value, "yyyy-MM-dd", {locale: ptBR});
-                    break;
-                case 'datetime-local':
-                    newValue[name] = format(value, "yyyy-MM-dd'T'HH:mm:ss",{locale: ptBR});
-                    break;
-                case 'time':
-                    newValue[name] = format(value, "HH:mm:ss");
-                    break;
-                default:
-                    newValue[name] = value;
-                    break;
-            }
-            return newValue;
-        });
+        setValores((prev) => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    const renderLabel = (key, className, htmlFor, text) => {
+        return (
+            <label key={key} className={className} htmlFor={htmlFor}>
+                {text}
+            </label>
+        );
+    };
+
+    const renderInput = (commonProps, type, id, checked = null) => {
+
+        if (type == 'radio') {
+            return (
+                <input {...commonProps} id={id} key={id} value={id} checked={checked} />
+            );
+        } else {
+            return (
+                <input {...commonProps} id={id} test={id} />
+            );
+        }
     };
 
     const renderField = (nome, atributos) => {
@@ -62,72 +66,32 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
             onChange: handleChange,
             disabled: atributos.disabled,
             required: atributos.required,
-            ...atributos.tipo === 'checkbox' ? { checked: valores[nome] || false } : { value: formatarCampo(atributos.tipo,valores[nome]) || '' }
+            placeholder: atributos.placeholder,
+            className: ['checkbox', 'radio'].includes(atributos.tipo) ? 'form-check-input' : 'form-control',
+            type: atributos.tipo,
+            ...atributos.tipo === 'checkbox' ? { checked: valores[nome] || false } : { value: formatarCampo(atributos.tipo, valores[nome]) || '' }
         };
 
-        switch (atributos.tipo) {
-            case 'radio':
-                return (
-                    <div className='mb-3' key={nome}>
-                        {atributos.options.map((option) => (
+        if (atributos.tipo == 'radio') {
+            return (
+                <div className='mb-3' key={nome}>
+                    {atributos.options.map((option) => (
                         <div className='form-check' key={`${option.toLowerCase()}-label`}>
-                            <label
-                                key={`${option.toLowerCase()}-label`}
-                                className='form-check-label'
-                                htmlFor={option}
-                            >
-                                {chaveParaTexto(option.toLowerCase())}
-                            </label>
-                            <input
-                                className='form-check-input'
-                                type={atributos.tipo}
-                                placeholder={atributos.placeholder}
-                                {...commonProps}
-                                key={option}
-                                id={option}
-                                value={option}
-                                checked={valores[nome] == option ? true : false}
-                            />
+                            {renderLabel(`${option.toLowerCase()}-label`, 'form-check-label', option, chaveParaTexto(option.toLowerCase()))}
+                            {renderInput({ ...commonProps }, atributos.tipo, option, valores[nome] == option ? true : false)}
                         </div>
                     ))}
-                    </div>
-                )
-                break;
-            case 'checkbox':
-                return (<div className='form-check' key={nome}>
-                    <label
-                        key={nome}
-                        className='form-check-label'
-                        htmlFor={nome}
-                    >
-                        {chaveParaTexto(nome)}
-                    </label>
-                    <input
-                        className='form-check-input'
-                        type={atributos.tipo}
-                        placeholder={atributos.placeholder}
-                        id={nome}
-                        {...commonProps}
-                    />
-                </div>)
-                break;
-            default:
-                return (<div className='mb-3' key={nome}>
-                    <label
-                        key={nome}
-                        className='form-label'
-                        htmlFor={nome}
-                    >
-                        {chaveParaTexto(nome)}
-                    </label>
-                    <input
-                        className='form-control'
-                        type={atributos.tipo}
-                        placeholder={atributos.placeholder}
-                        {...commonProps}
-                    />
-                </div>);
-                break;
+                </div>
+            );
+        } else {
+            const divClassName = `mb-3 ${atributos.tipo == 'checkbox' ? 'form-check' : ''}`;
+            const labelClassName = atributos.tipo == 'checkbox' ? 'form-check-label' : 'form-label';
+            return (
+                <div className={divClassName} key={nome}>
+                    {renderLabel(nome, labelClassName, nome, chaveParaTexto(nome))}
+                    {renderInput({ ...commonProps }, atributos.tipo,nome)}
+                </div>
+            );
         }
     };
 
