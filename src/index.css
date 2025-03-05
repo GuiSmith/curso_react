@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+}
+
+form .form-control {
+  width: 30%;
+}
+
+form .button-group .btn {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+form .radio-group > *, form .checkbox-group > * {
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  form .form-control {
+    width: 100%;
+  }
+}
+
+#footer {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: black;
+  color: white;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-content a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+.footer-content img {
+  width: 50px;
+  border: solid 1px white;
+  border-radius: 15px;
+}
