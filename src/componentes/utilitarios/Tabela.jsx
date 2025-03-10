@@ -31,7 +31,7 @@ const Tabela = ({ titulo, colunas, objetos, botoes }) => {
     return (
         <article>
             <h2 className='text-center'>{titulo}</h2>
-            {<Botoes botoes={botoes} />}
+            {<Botoes classes='mb-3' botoes={botoes} />}
             <div className='table-responsive'>
                 <table className={tableClasses.join(' ')}>
                     <thead>

@@ -55,8 +55,15 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
     }
 
     const salvar = () => {
+
         const method = valores.id ? 'PUT' : 'POST';
-        fetch(url, api_options(method, valores))
+        const options = api_options(method, valores);
+
+        if(options === null) {
+            setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem='Nenhum dado foi preenchido' />);
+            return;
+        }
+        fetch(url, options)
             .then(response => response.json())
             .then(data => {
                 setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);

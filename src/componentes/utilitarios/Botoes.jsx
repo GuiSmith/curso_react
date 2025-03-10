@@ -1,6 +1,6 @@
-const Botoes = ({ botoes }) => {
+const Botoes = ({ botoes, classes = '' }) => {
     return (
-        <div>
+        <div className = {classes}>
             {
                 Object.keys(botoes).map((key) => (
                     <button

@@ -31,11 +31,10 @@ const Login = () => {
             const data = await response.json();
 
             setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
-
-            if(!data.ok){
+            if (!data.ok) {
                 console.table(data);
-            }else{
-                Cookies.set('token',data.token,diferencaEmDias(data.data_hora_expiracao_token))
+            } else {
+                Cookies.set('token', data.token, diferencaEmDias(data.data_hora_expiracao_token))
             }
         } catch (error) {
             setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem={error} />);
@@ -56,7 +55,7 @@ const Login = () => {
 
     const [valores, setValores] = useState(
         Object.fromEntries(
-            Object.keys(campos).map((chave) => [chave,''])
+            Object.keys(campos).map((chave) => [chave, ''])
         )
     );
 
@@ -75,24 +74,26 @@ const Login = () => {
 
     useEffect(() => {
         // console.table(Cookies.get());
-        if(Cookies.get('token')){
+        if (Cookies.get('token')) {
             login({
                 token: Cookies.get('token') || null
             });
         }
-    },[]);
+    }, []);
 
     return (
-        <Formulario 
-            titulo={titulo}
-            campos={campos}
-            botoes={botoes}
-            endpoint={endpoint}
-            valores={valores}
-            setValores={setValores}
-            mensagem={mensagem}
-            setMensagem={setMensagem}
-        />
+        <section>
+            <h2 className='text-center'>Entrar</h2>
+            <Formulario
+                titulo={titulo}
+                campos={campos}
+                botoes={botoes}
+                endpoint={endpoint}
+                valores={valores}
+                setValores={setValores}
+            />
+            {mensagem}
+        </section>
     )
 
 };
