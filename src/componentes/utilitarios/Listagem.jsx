@@ -12,26 +12,33 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [] }) =
 
     const [offset, setOffset] = useState(0);
 
+    const [total,setTotal] = useState(0);
+
     useEffect(() => {
 
+        // Resgatando total sem filtros
         const url = `${api_url}/${endpoint}`;
         fetch(url, api_options('GET'))
             .then(response => response.json())
             .then(data => {
                 if(data.ok){
-                    console.log(`Total: ${data.lista.length}`);
+                    setTotal(data.lista.length);
                 }else{
-                    console.log("Calculando total");
+                    console.log(`Não foi possível calcular o total: ${data.mensagem}`);
                     console.table(data);
                 }
             })
+            .catch(error => {
+                setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem={`Erro: ${error}`} />);
+            });
 
+        // Resgatando objetos
         const fields = colunas.length > 0 ? `fields=${colunas.join(',')}` : '';
         const orderBy = 'order_by=id';
         const limit = `limit=${api_limit}`;
         const completeURL = `${url}?${[fields, `offset=${offset}`, limit, orderBy].join('&')}`;
         const options = api_options('GET');
-        console.log(url);
+        // console.log(url);
 
         fetch(completeURL, options)
             .then(response => response.json())
@@ -50,7 +57,15 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [] }) =
 
     return (
         <article>
-            <Tabela titulo={titulo} colunas={colunas} objetos={objetos} botoes={botoes} />
+            <Tabela
+                titulo={titulo}
+                colunas={colunas}
+                objetos={objetos}
+                botoes={botoes}
+                total={total}
+                offset={offset}
+                setOffset={setOffset}
+            />
             {mensagem}
         </article>
     )
