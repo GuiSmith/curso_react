@@ -13,11 +13,11 @@ function App() {
     <>
       <section className="container-fluid">
         <h1 className='text-center mb-3 mt-3'>Restaurante</h1>
-        <Login />
-        {/* <Usuario /> */}
-        {/* <Usuarios /> */}
-        <Item />
-        <Itens />
+        {/* <Login /> */}
+        <Usuario />
+        <Usuarios />
+        {/* <Item /> */}
+        {/* <Itens /> */}
       </section>
       <Rodape />
     </>
