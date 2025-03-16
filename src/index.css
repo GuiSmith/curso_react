@@ -2,6 +2,25 @@ body {
   margin: 0;
 }
 
+.ordenar-icon::before {
+  content: ' ';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  margin-left: 4px;
+}
+
+.ordenar-icon.asc::before {
+  border-bottom: 8px solid black;
+}
+
+.ordenar-icon.desc::before {
+  border-top: 8px solid black;
+}
+
+
 form .form-control {
   width: 30%;
 }
