@@ -27,7 +27,6 @@ const api_options = (api_method, api_body = {}) => {
             return null;
         }else{
             obj.body = JSON.stringify(stripped_api_body);
-            console.log(`Tipo do body: ${typeof(obj.body)}`);
         }
     }
     return obj;
