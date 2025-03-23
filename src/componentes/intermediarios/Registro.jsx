@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import queryString from "query-string";
 
 // Componentes
-import Formulario from "../utilitarios/Formulario";
-import Mensagem from "../utilitarios/Mensagem";
+import Formulario from "@componentes/utilitarios/Formulario";
+import Mensagem from "@componentes/utilitarios/Mensagem";
 
 //Utilitários
-import { api_url, api_options } from '../utilitarios/API';
-import { resetarURL, definirURL } from '../utilitarios/Funcoes';
+import { api_url, api_options } from '@componentes/utilitarios/API';
+import { resetarURL, definirURL } from '@componentes/utilitarios/Funcoes';
 
 const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
 
@@ -29,6 +29,11 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
     };
 
     useEffect(() => {
+        if (Object.keys(campos).length === 0) return;
+        resetarValores();
+    }, [campos]);
+
+    useEffect(() => {
 
         const params = queryString.parse(window.location.search);
         const options = api_options('GET');
@@ -43,8 +48,9 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
                     }
                     setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />)
                 })
-        }else{
+        } else {
             resetarValores();
+            setNovoRegistro(true);
         }
     }, [novoRegistro]);
 
@@ -56,10 +62,12 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
 
     const salvar = () => {
 
+        console.log(valores);
+
         const method = valores.id ? 'PUT' : 'POST';
         const options = api_options(method, valores);
 
-        if(options === null) {
+        if (options === null) {
             setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem='Nenhum dado foi preenchido' />);
             return;
         }
@@ -67,17 +75,17 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
             .then(response => response.json())
             .then(data => {
                 setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
-                if(data.ok){
-                    if(method == 'POST') {
+                if (data.ok) {
+                    if (method == 'POST') {
                         resetarValores();
                         resetarURL();
-                        definirURL([{id: data.id}]);
+                        definirURL([{ id: data.id }]);
                         setNovoRegistro(false);
                     }
-                    if(method == 'PUT') {
+                    if (method == 'PUT') {
                         window.location.reload();
                     }
-                }else{
+                } else {
                     console.log(data);
                 }
             })
@@ -89,16 +97,16 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
 
     const deletar = () => {
         const confirmation = confirm(`Realmente deseja deletar este ${titulo.toLowerCase()}?`);
-        
-        if(!confirmation) return;
+
+        if (!confirmation) return;
 
         fetch(`${url}?id=${valores.id}`, api_options('DELETE'))
             .then(response => response.json())
             .then(data => {
-                if(data.ok){
+                if (data.ok) {
                     novo();
                     setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
-                }else{
+                } else {
                     console.table(data);
                 }
             })

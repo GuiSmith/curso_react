@@ -1,4 +1,4 @@
-import Listagem from './utilitarios/Listagem';
+import Listagem from '@componentes/intermediarios/Listagem';
 import { useState } from 'react';
 
 const Logs = () => {

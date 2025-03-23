@@ -46,7 +46,6 @@ const Comanda = () => {
     const condicoes = {
         id_comanda: params.id ?? 0,
     };
-    console.log(condicoes);
     // const condicoes = params.id ? { id_comanda: params.id } : {};
     return (
         <div>

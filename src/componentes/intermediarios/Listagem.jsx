@@ -5,7 +5,7 @@ import Tabela from '../utilitarios/Tabela';
 import Botoes from '../utilitarios/Botoes';
 import Mensagem from '../utilitarios/Mensagem';
 
-const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [], condicoes= {} }) => {
+const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [], condicoes= {}, paginaRegistro = '' }) => {
 
     const [mensagem, setMensagem] = useState('');
 
@@ -118,7 +118,7 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [], con
                     {criarLinkPaginacao('»', pagina + 1)}
                 </ul>
             </nav>
-            <Tabela colunas={colunas} objetos={objetos} total={total} />
+            <Tabela colunas={colunas} objetos={objetos} total={total} paginaRegistro={paginaRegistro} />
             {mensagem}
         </article>
     )

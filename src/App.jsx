@@ -1,33 +1,51 @@
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import queryString from 'query-string';
+import { useState, useEffect } from 'react';
+
+// Barra de navegação e rodapé
+import BarraDeNavegacao from '@componentes/finais/BarraDeNavegacao';
 import Rodape from '@componentes/finais/Rodape';
-import Usuario from '@paginas/usuarios/Usuario';
+
+// Páginas do sistema
+import Comandas from '@paginas/comandas/Comandas';
+import Itens from '@paginas/itens/Itens';
+import Logs from '@paginas/Logs';
+import Usuarios from '@paginas/usuarios/Usuarios';
 import Login from '@paginas/usuarios/Login';
 
-import Comanda from './paginas/comandas/Comanda';
-import Comandas from './paginas/comandas/Comandas';
-
+// Páginas de registro
+import Comanda from '@paginas/comandas/Comanda';
 import Item from '@paginas/itens/Item';
-
+import Usuario from '@paginas/usuarios/Usuario';
 import ItemComanda from '@paginas/itemcomandas/ItemComanda';
-import ItemComandas from '@paginas/itemcomandas/ItemComandas';
+
+// Utilitários
+import { resetarURL, definirURL } from '@componentes/utilitarios/Funcoes';
+
+import './App.css';
 
 function App() {
 
   return (
-    <>
-      <section className="container-fluid">
-        <h1 className='text-center mb-3 mt-3'>Restaurante</h1>
-        {/* <Usuario /> */}
-        <Login />
-        {/* <Item /> */}
-        <Comanda />
-        <Comandas />
-        {/* <ItemComanda id_comanda = '1' /> */}
-        {/* <ItemComandas condicoes = {{id_comanda: 1}} /> */}
-      </section>
+    <Router>
+      <BarraDeNavegacao />
+      <div style={{ padding: '1rem' }}>
+        <Routes>
+          <Route path="/" element={<Comandas />} />
+          <Route path="/itens" element={<Itens />} />
+          <Route path="/logs" element={<Logs />} />
+          <Route path="/usuarios" element={<Usuarios />} />
+          <Route path="/login" element={<Login />} />
+          <Route path='comandas/registro' element={<Comanda />} />
+          <Route path='itens/registro' element={<Item />} />
+          <Route path='usuarios/registro' element={<Usuario />} />
+          <Route path='itemcomandas/registro' element={<ItemComanda />} />
+        </Routes>
+      </div>
+
       <Rodape />
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;

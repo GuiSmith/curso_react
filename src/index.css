@@ -64,3 +64,12 @@ form .radio-group > *, form .checkbox-group > * {
   border: solid 1px white;
   border-radius: 15px;
 }
+
+table .table-row {
+  cursor: pointer;
+}
+
+table .table-row:hover {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}

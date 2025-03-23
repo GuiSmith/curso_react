@@ -1,11 +1,14 @@
 import Registro from "@componentes/intermediarios/Registro";
 
-const ItemComanda = ({id_comanda = null}) => {
+import queryString from 'query-string';
+
+const ItemComanda = () => {
     
     const titulo = 'Item de comanda';
 
     const endpoint = 'itemcomanda.php';
 
+    const params = queryString.parse(window.location.search);
     const campos = {
         id: {
             tipo: 'number',
@@ -13,12 +16,12 @@ const ItemComanda = ({id_comanda = null}) => {
         },
         id_item: {
             tipo: 'number',
+            placeholder: 'Digite o id do item aqui',
         },
         id_comanda: {
             tipo: 'number',
             disabled: true,
-            value: id_comanda,
-            hidden: true
+            value: params.id_comanda ?? '',
         },
         quantidade: {
             tipo: 'number',
@@ -26,7 +29,7 @@ const ItemComanda = ({id_comanda = null}) => {
         },
         status: {
             tipo: 'radio',
-            options: ['CADASTRADO', 'CONFIRMADO','PRONTO','ENTREGUE'],
+            options: ['CADASTRADO', 'CONFIRMADO', 'PRONTO', 'ENTREGUE'],
         },
         data_hora_cadastro: {
             tipo: 'datetime-local',
@@ -57,7 +60,7 @@ const ItemComanda = ({id_comanda = null}) => {
             campos={campos}
             endpoint={endpoint}
         />
-    )
-}
+    );
+};
 
 export default ItemComanda;

@@ -1,4 +1,4 @@
-import Listagem from "../utilitarios/Listagem";
+import Listagem from "@componentes/intermediarios/Listagem";
 import { useState } from 'react';
 
 const Usuarios = () => {
@@ -7,24 +7,16 @@ const Usuarios = () => {
 
     const titulo = 'Usuários';
 
+    const paginaRegistro = '/usuarios/registro';
+
     const [colunas, setColunas] = useState(['id', 'ativo', 'nome', 'email', 'data_hora_cadastro']);
 
     const botoes = [
         {
             texto: 'Novo',
             classe: 'btn-primary',
-            acao: () => console.log('Novo')
+            to: paginaRegistro
         },
-        {
-            texto: 'Importar',
-            classe: 'btn-secondary',
-            acao: () => console.log('Importar')
-        },
-        {
-            texto: 'Exportar',
-            classe: 'btn-dark',
-            acao: () => console.log('Exportar')
-        }
     ];
 
     return (
@@ -35,6 +27,7 @@ const Usuarios = () => {
                 colunas={colunas}
                 setColunas={setColunas}
                 botoes={botoes}
+                paginaRegistro={paginaRegistro}
             />
         </section>
     )

@@ -1,9 +1,9 @@
-import Formulario from "../../componentes/utilitarios/Formulario";
-import { diferencaEmDias } from "../../componentes/utilitarios/Funcoes";
+import Formulario from "@componentes/utilitarios/Formulario";
+import { diferencaEmDias } from "@componentes/utilitarios/Funcoes";
 import { useState, useEffect } from "react";
-import Mensagem from "../../componentes/utilitarios/Mensagem";
+import Mensagem from "@componentes/utilitarios/Mensagem";
 import Cookies from 'js-cookie';
-import { api_url } from "../../componentes/utilitarios/API";
+import { api_url } from "@componentes/utilitarios/API";
 
 const Login = () => {
 

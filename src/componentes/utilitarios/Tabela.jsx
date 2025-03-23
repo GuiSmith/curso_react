@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 
 import { chaveParaTexto, capitalizarTexto } from "./Funcoes";
 
-const Tabela = ({ colunas, objetos, total }) => {
+const Tabela = ({ colunas, objetos, total, paginaRegistro='' }) => {
 
     // Formatação de dados
 
     const [ordenacao, setOrdenacao] = useState({ coluna: null, ordem: 'asc' });
     const [objetosOrdenados, setObjetosOrdenados] = useState([]);
+
+    const tableClasses = ['table', 'table-striped', 'table-bordered'];
 
     useEffect(() => {
         let novaLista = [...objetos];
@@ -32,8 +34,6 @@ const Tabela = ({ colunas, objetos, total }) => {
         setObjetosOrdenados(novaLista);
     }, [ordenacao, objetos]);
 
-    const tableClasses = ['table', 'table-striped', 'table-bordered'];
-
     const formatarCampo = (chave, valor) => {
         // console.log(chave,valor);
         // Data
@@ -52,7 +52,13 @@ const Tabela = ({ colunas, objetos, total }) => {
         }
 
         return valor;
-    }
+    };
+
+    const handleRowClick = (id) => {
+        if(paginaRegistro){
+            window.location.href = `${paginaRegistro}?id=${id}`;
+        }   
+    };
 
     return (
         <div className='table-responsive'>
@@ -86,7 +92,7 @@ const Tabela = ({ colunas, objetos, total }) => {
                 </thead>
                 <tbody>
                     {objetosOrdenados.map((objeto, index) => (
-                        <tr key={index}>
+                        <tr key={index} onClick = {() => handleRowClick(objeto.id)} className='table-row'>
                             {colunas.map((coluna) => (
                                 <td key={coluna}>
                                     {/* {objeto[coluna]} */}
