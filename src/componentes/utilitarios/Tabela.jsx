@@ -37,7 +37,7 @@ const Tabela = ({ colunas, objetos, total }) => {
     const formatarCampo = (chave, valor) => {
         // console.log(chave,valor);
         // Data
-        if (chave.includes('data')) {
+        if (chave.includes('data') && valor) {
             return format(valor, "dd/MM/yyyy HH:mm:ss", { locale: ptBR });
         }
 

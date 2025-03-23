@@ -61,6 +61,8 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
     };
 
     const renderField = (nome, atributos) => {
+
+        if (atributos.hidden) return null;
         const commonProps = {
             name: nome,
             onChange: handleChange,

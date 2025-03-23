@@ -1,4 +1,4 @@
-import Registro from '../utilitarios/Registro';
+import Registro from '@componentes/intermediarios/Registro';
 
 const Usuario = () => {
 

@@ -1,11 +1,11 @@
-import Listagem from "../utilitarios/Listagem";
-import { useState } from "react";
+import Listagem from '@componentes/intermediarios/Listagem';
+import { useState } from 'react';
 
-const Itens = () => {
+const Comandas = (condicoes = {}) => {
     
-    const endpoint = 'item.php';
+    const endpoint = 'comanda.php';
 
-    const titulo = 'Itens';
+    const titulo = 'Comandas';
 
     const [colunas, setColunas] = useState();
 
@@ -16,9 +16,10 @@ const Itens = () => {
                 endpoint={endpoint}
                 colunas={colunas}
                 setColunas={setColunas}
+                condicoes={condicoes}
             />
         </section>
     )
-};
+}
 
-export default Itens;
+export default Comandas;

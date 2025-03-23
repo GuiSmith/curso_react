@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { api_url, api_options, api_limit } from '../utilitarios/API';
 
 import Tabela from '../utilitarios/Tabela';
-import Botoes from './Botoes';
+import Botoes from '../utilitarios/Botoes';
 import Mensagem from '../utilitarios/Mensagem';
 
-const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [] }) => {
+const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [], condicoes= {} }) => {
 
     const [mensagem, setMensagem] = useState('');
 
@@ -33,10 +33,14 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [] }) =
             });
 
         // Resgatando objetos
+        const conditions = Object.entries(condicoes)
+            .map(([campo, valor]) => `${campo}=${encodeURIComponent(valor)}`)
+            .join('&');
         const fields = colunas.length > 0 ? `fields=${colunas.join(',')}` : '';
         const orderBy = 'order_by=id';
         const limit = `limit=${api_limit}`;
-        const completeURL = `${url}?${[fields, `offset=${offset}`, limit, orderBy].join('&')}`;
+        const parts = [conditions,fields, `offset=${offset}`, limit, orderBy].filter(p => p);
+        const completeURL = `${url}?${parts.join('&')}`;
         const options = api_options('GET');
         // console.log(url);
 

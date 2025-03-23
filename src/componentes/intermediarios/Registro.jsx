@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import queryString from "query-string";
 
 // Componentes
-import Formulario from "./Formulario";
-import Mensagem from "./Mensagem";
+import Formulario from "../utilitarios/Formulario";
+import Mensagem from "../utilitarios/Mensagem";
 
 //Utilitários
-import { api_url, api_options } from './API';
-import { resetarURL, definirURL } from './Funcoes';
+import { api_url, api_options } from '../utilitarios/API';
+import { resetarURL, definirURL } from '../utilitarios/Funcoes';
 
 const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
 
@@ -23,7 +23,7 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
     const resetarValores = () => {
         setValores(
             Object.fromEntries(
-                Object.keys(campos).map((chave) => [chave, ''])
+                Object.keys(campos).map((chave) => [chave, campos[chave].value ?? ''])
             )
         );
     };
@@ -67,11 +67,18 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
             .then(response => response.json())
             .then(data => {
                 setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
-                if(data.ok && method == 'POST'){
-                    resetarValores();
-                    resetarURL();
-                    definirURL([{id: data.id}]);
-                    setNovoRegistro(false);
+                if(data.ok){
+                    if(method == 'POST') {
+                        resetarValores();
+                        resetarURL();
+                        definirURL([{id: data.id}]);
+                        setNovoRegistro(false);
+                    }
+                    if(method == 'PUT') {
+                        window.location.reload();
+                    }
+                }else{
+                    console.log(data);
                 }
             })
             .catch(error => {
@@ -91,6 +98,8 @@ const Registro = ({ titulo, campos, endpoint, botoesPersonalizados = [] }) => {
                 if(data.ok){
                     novo();
                     setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
+                }else{
+                    console.table(data);
                 }
             })
             .catch(error => {

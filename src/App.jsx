@@ -1,11 +1,15 @@
 import './App.css'
-import Rodape from './componentes/Rodape';
-import NovoUsuario from './componentes/usuarios/Usuario';
-import Usuario from './componentes/usuarios/Usuario';
-import Login from './componentes/usuarios/Login';
-import Usuarios from './componentes/usuarios/Usuarios';
-import Itens from './componentes/itens/Itens';
-import Item from './componentes/itens/Item';
+import Rodape from '@componentes/finais/Rodape';
+import Usuario from '@paginas/usuarios/Usuario';
+import Login from '@paginas/usuarios/Login';
+
+import Comanda from './paginas/comandas/Comanda';
+import Comandas from './paginas/comandas/Comandas';
+
+import Item from '@paginas/itens/Item';
+
+import ItemComanda from '@paginas/itemcomandas/ItemComanda';
+import ItemComandas from '@paginas/itemcomandas/ItemComandas';
 
 function App() {
 
@@ -13,11 +17,13 @@ function App() {
     <>
       <section className="container-fluid">
         <h1 className='text-center mb-3 mt-3'>Restaurante</h1>
-        {/* <Login /> */}
-        <Usuario />
-        <Usuarios />
+        {/* <Usuario /> */}
+        <Login />
         {/* <Item /> */}
-        {/* <Itens /> */}
+        <Comanda />
+        <Comandas />
+        {/* <ItemComanda id_comanda = '1' /> */}
+        {/* <ItemComandas condicoes = {{id_comanda: 1}} /> */}
       </section>
       <Rodape />
     </>

@@ -1,9 +1,9 @@
-import Formulario from "../utilitarios/Formulario";
-import { diferencaEmDias } from "../utilitarios/Funcoes";
+import Formulario from "../../componentes/utilitarios/Formulario";
+import { diferencaEmDias } from "../../componentes/utilitarios/Funcoes";
 import { useState, useEffect } from "react";
-import Mensagem from "../utilitarios/Mensagem";
+import Mensagem from "../../componentes/utilitarios/Mensagem";
 import Cookies from 'js-cookie';
-import { api_url } from "../utilitarios/API";
+import { api_url } from "../../componentes/utilitarios/API";
 
 const Login = () => {
 
@@ -83,7 +83,7 @@ const Login = () => {
 
     return (
         <section>
-            <h2 className='text-center'>Entrar</h2>
+            <h4>Entrar</h4>
             <Formulario
                 titulo={titulo}
                 campos={campos}
