@@ -1,5 +1,6 @@
 import Registro from "@componentes/intermediarios/Registro";
 import ItemComandas from '@paginas/itemcomandas/ItemComandas';
+import Pagamentos from '@paginas/pagamentos/Pagamentos';
 
 import queryString from "query-string";
 
@@ -55,6 +56,7 @@ const Comanda = () => {
                 endpoint={endpoint}
             />
             <ItemComandas condicoes={condicoes} />
+            <Pagamentos condicoes={condicoes} />
         </div>
     )
 }

@@ -69,6 +69,16 @@ function BarraDeNavegacao() {
                 Usuários
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                to="/pagamentos"
+                className={({ isActive }) =>
+                  `nav-link ${isActive ? 'active' : ''}`
+                }
+              >
+                Pagamentos
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>

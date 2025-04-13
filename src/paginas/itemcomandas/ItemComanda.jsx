@@ -15,12 +15,6 @@ const ItemComanda = () => {
             tipo: 'number',
             disabled: true,
         },
-        // id_item: {
-        //     tipo: 'number',
-        //     // placeholder: 'Digite o id do item aqui',
-        //     disabled: true,
-        //     // hidden: true,
-        // },
         id_item: {
             tipo: 'select',
             endpoint: 'item.php',
@@ -30,9 +24,7 @@ const ItemComanda = () => {
         },
         id_comanda: {
             tipo: 'hidden',
-            // disabled: true,
             value: params.id_comanda ?? '',
-            // hidden: true,
         },
         quantidade: {
             tipo: 'number',
