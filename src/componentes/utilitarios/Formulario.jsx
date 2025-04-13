@@ -1,10 +1,12 @@
 // Componentes react
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useState, useEffect } from 'react';
 
 // Componentes utilitários
 import { chaveParaTexto } from './Funcoes';
 import Botoes from './Botoes';
+import { api_limit, api_url, api_options } from './API';
 
 const Formulario = ({ campos, botoes = [], valores, setValores }) => {
 
@@ -37,6 +39,8 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
+
+        console.log(`${name}: ${value}`);
     };
 
     const renderLabel = (key, className, htmlFor, text) => {
@@ -62,7 +66,6 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
 
     const renderField = (nome, atributos) => {
 
-        if (atributos.hidden) return null;
         const commonProps = {
             name: nome,
             onChange: handleChange,
@@ -79,23 +82,75 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
                 <div className='mb-3' key={nome}>
                     {atributos.options.map((option) => (
                         <div className='form-check' key={`${option.toLowerCase()}-label`}>
-                            {renderLabel(`${option.toLowerCase()}-label`, 'form-check-label', option, chaveParaTexto(option.toLowerCase()))}
+                            {atributos.tipo != 'hidden' ? renderLabel(`${option.toLowerCase()}-label`, 'form-check-label', option, chaveParaTexto(option.toLowerCase())) : null }
                             {renderInput({ ...commonProps }, atributos.tipo, option, valores[nome] == option ? true : false)}
                         </div>
                     ))}
                 </div>
             );
-        } else {
-            const divClassName = `mb-3 ${atributos.tipo == 'checkbox' ? 'form-check' : ''}`;
-            const labelClassName = atributos.tipo == 'checkbox' ? 'form-check-label' : 'form-label';
+        }
+
+        if(atributos.tipo == 'select') {
             return (
-                <div className={divClassName} key={nome}>
-                    {renderLabel(nome, labelClassName, nome, chaveParaTexto(nome))}
-                    {renderInput({ ...commonProps }, atributos.tipo,nome)}
+                <div className='mb-3' key={nome}>
+                    {atributos.tipo != 'hidden' ? renderLabel(`${nome}-label`, 'form-label', nome, atributos.label ?? chaveParaTexto(nome)) : null}
+                    <select {...commonProps} id={nome} key={nome}>
+                        <option value="">{atributos.placeholder}</option>
+                        {/* {options} */}
+                    </select>
                 </div>
             );
         }
+
+        const divClassName = `mb-3 ${atributos.tipo == 'checkbox' ? 'form-check' : ''}`;
+        const labelClassName = atributos.tipo == 'checkbox' ? 'form-check-label' : 'form-label';
+        return (
+            <div className={divClassName} key={nome}>
+                {atributos.tipo != 'hidden' ? renderLabel(nome, labelClassName, nome, atributos.label ?? chaveParaTexto(nome)) : null}
+                {renderInput({ ...commonProps }, atributos.tipo, nome)}
+            </div>
+        );
     };
+
+    useEffect(() => {
+        if(valores){
+            console.log(valores);
+        }
+    },[valores]);
+
+    useEffect(() => {
+        const camposSelect = Object.entries(campos).filter(([_, valor]) => valor.tipo === 'select');
+        camposSelect.forEach(([name, properties]) => {
+
+            if (!properties.endpoint || !properties.optionLabel) return;
+
+            const { endpoint, optionLabel } = properties;
+
+            const completeUrl = `${api_url}/${endpoint}?fields=${['id', optionLabel].join(',')}`;
+
+            fetch(completeUrl, api_options('GET'))
+                .then((response) => response.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.ok) {
+                        const lista = data.lista;
+                        // Creating options for select
+                        const selectElement = document.getElementById(name);
+                        selectElement.innerHTML = '';
+                        // Se optionLabel não fornecido, desative o campo
+                        lista.forEach((item) => {
+                            selectElement.appendChild(new Option(item[optionLabel], item.id));
+                        });
+                    } else {
+                        console.log(data.mensagem);
+                    }
+                })
+                .catch(error => {
+                    console.error(`Erro ao realizar busca de ${name} por ${searchBy}`);
+                    console.log(completeUrl);
+                });
+        });
+    },[campos]);
 
     return (
         <div>

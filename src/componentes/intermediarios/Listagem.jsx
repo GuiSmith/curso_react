@@ -55,7 +55,7 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [], con
                 }
                 setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
             })
-            .catch(error => setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem={error} />));
+            .catch(error => setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem={error.message} />));
 
     }, [offset]);
 

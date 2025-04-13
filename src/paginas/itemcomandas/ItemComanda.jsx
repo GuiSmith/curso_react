@@ -9,19 +9,30 @@ const ItemComanda = () => {
     const endpoint = 'itemcomanda.php';
 
     const params = queryString.parse(window.location.search);
+
     const campos = {
         id: {
             tipo: 'number',
             disabled: true,
         },
+        // id_item: {
+        //     tipo: 'number',
+        //     // placeholder: 'Digite o id do item aqui',
+        //     disabled: true,
+        //     // hidden: true,
+        // },
         id_item: {
-            tipo: 'number',
-            placeholder: 'Digite o id do item aqui',
+            tipo: 'select',
+            endpoint: 'item.php',
+            placeholder: 'Selecione o item aqui',
+            optionLabel: 'descricao',
+            label: 'Item',
         },
         id_comanda: {
-            tipo: 'number',
-            disabled: true,
+            tipo: 'hidden',
+            // disabled: true,
             value: params.id_comanda ?? '',
+            // hidden: true,
         },
         quantidade: {
             tipo: 'number',
