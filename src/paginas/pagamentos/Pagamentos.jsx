@@ -16,8 +16,10 @@ const Pagamentos = ({condicoes = {}}) => {
             texto: 'Novo',
             classe: 'btn-primary',
             to: condicoes.id_comanda ? `${paginaRegistro}?id_comanda=${condicoes.id_comanda}` : paginaRegistro,
+            disabled: condicoes.id_comanda ? false : true
         },
     ];
+
     return (
         <section className="container-fluid">
             <Listagem
