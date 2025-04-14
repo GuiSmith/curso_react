@@ -113,12 +113,6 @@ const Formulario = ({ campos, botoes = [], valores, setValores }) => {
     };
 
     useEffect(() => {
-        if(valores){
-            console.log(valores);
-        }
-    },[valores]);
-
-    useEffect(() => {
         const camposSelect = Object.entries(campos).filter(([_, valor]) => valor.tipo === 'select');
         camposSelect.forEach(([name, properties]) => {
 
