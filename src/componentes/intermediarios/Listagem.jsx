@@ -50,10 +50,9 @@ const Listagem = ({ titulo, endpoint, colunas = [], setColunas, botoes = [], con
                 if (data.ok) {
                     setColunas(Object.keys(data.lista[0]));
                     setObjetos(data.ok ? data.lista : []);
-                } else {
-                    console.table(data);
+                }else{
+                    setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={`${titulo}: ${data.mensagem}`} />);
                 }
-                setMensagem(<Mensagem key={Date.now()} tipo={data.ok} mensagem={data.mensagem} />);
             })
             .catch(error => setMensagem(<Mensagem key={Date.now()} tipo={false} mensagem={error.message} />));
 
