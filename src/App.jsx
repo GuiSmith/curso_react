@@ -24,25 +24,27 @@ import './App.css';
 function App() {
 
   return (
-    <Router>
-      <BarraDeNavegacao />
-      <div style={{ padding: '1rem' }}>
-        <Routes>
-          <Route path="/" element={<Comandas />} />
-          <Route path="/itens" element={<Itens />} />
-          <Route path="/logs" element={<Logs />} />
-          <Route path="/usuarios" element={<Usuarios />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/pagamentos" element={<Pagamentos />} />
-          <Route path="pagamentos/registro" element={<Pagamento />} />
-          <Route path='comandas/registro' element={<Comanda />} />
-          <Route path='itens/registro' element={<Item />} />
-          <Route path='usuarios/registro' element={<Usuario />} />
-          <Route path='itemcomandas/registro' element={<ItemComanda />} />
-        </Routes>
-      </div>
-      <Rodape />
-    </Router>
+    <div className = 'app-container'>
+      <Router>
+        <BarraDeNavegacao />
+        <div className='page-wrapper' >
+          <Routes>
+            <Route path="/" element={<Comandas />} />
+            <Route path="/itens" element={<Itens />} />
+            <Route path="/logs" element={<Logs />} />
+            <Route path="/usuarios" element={<Usuarios />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/pagamentos" element={<Pagamentos />} />
+            <Route path="pagamentos/registro" element={<Pagamento />} />
+            <Route path='comandas/registro' element={<Comanda />} />
+            <Route path='itens/registro' element={<Item />} />
+            <Route path='usuarios/registro' element={<Usuario />} />
+            <Route path='itemcomandas/registro' element={<ItemComanda />} />
+          </Routes>
+        </div>
+        <Rodape />
+      </Router>
+    </div>
   );
 }
 
