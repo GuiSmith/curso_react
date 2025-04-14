@@ -10,8 +10,8 @@ const Botoes = ({ botoes, classes = '' }) => {
                         return (
                             <NavLink
                                 key={key}
-                                to={botao.to}
-                                className={`btn ${botao.classe || 'btn-dark'} me-2`}
+                                to={botao.disabled ? '' : botao.to}
+                                className={`btn ${botao.classe || 'btn-dark'} me-2 ${(!botao.to || botao.disabled) ? 'disabled' : ''}`}
                             >
                                 {botao.texto || 'Botão'}
                             </NavLink>
