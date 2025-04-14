@@ -1,5 +1,18 @@
-body {
+html, body, #root, .app-container {
+  height: 100%;
   margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  flex: 1;
+  padding: 1rem;
 }
 
 .ordenar-icon::before {
@@ -25,6 +38,16 @@ form .form-control {
   width: 30%;
 }
 
+form .row .form-control {
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  form .form-control {
+    width: 100%;
+  }
+}
+
 form .button-group .btn {
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
@@ -34,13 +57,8 @@ form .radio-group > *, form .checkbox-group > * {
   margin-right: 0.5rem;
 }
 
-@media (max-width: 768px) {
-  form .form-control {
-    width: 100%;
-  }
-}
-
 #footer {
+  margin-top: auto;
   width: 100%;
   padding: 0.5rem 1rem;
   background-color: black;
